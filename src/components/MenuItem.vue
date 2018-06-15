@@ -11,7 +11,7 @@
         <div class="card-text">{{ item.description }}</div>
         <div class="card-text">{{ item.price }} DKK</div>
         <div class="card-text">{{ item.type.fields.title }}</div>
-        <button class="btn btn-primary" :click="addToCart">I buy this item</button>
+        <button class="btn btn-primary" @click="addToCart(item)">I buy this item</button>
       </div>
     </div>
   </div>
