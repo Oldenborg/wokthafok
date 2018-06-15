@@ -1,24 +1,54 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-// import {createClient} from 'contentful';
-//
-// const client = createClient({
-//     space: 'developer_bookshelf',
-//     accessToken: '0b7f6x59a0'
-// });
+import {createClient} from 'contentful';
+
+const client = createClient({
+    space: 'n7az14uegfuq',
+    accessToken: 'e2519409affba32fa4a06c63bac3f5df9c60cc8b174ee01e50a59f656e512b73'
+});
+// Content preview access: 2685c076cbca360be599127f3998c943977bccfc7460f49e5754400d31202803
+
+client.getEntries({
+  'content_type': 'page'
+})
+.then((response) => console.log(response.items))
+.catch(console.error);
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    dick: false,
+    page: {},
+    pizzas: [],
+    cart: [],
   },
   mutations: {
+    setPage(s, data) {
+      s.page = data;
+    },
 
+    setPizzas(s, data) {
+      s.pizzas = data;
+    }
   },
   actions: {
-    showDick(s) {
-      s.dick = true;
+    async getPage({ commit }, pageId) {
+      await client.getEntry(pageId)
+        .then(function (entry) {
+          commit('setPage', entry);
+        });
+    },
+
+    async getPizzas({ commit }) {
+      await client.getEntries({
+        'content_type': 'pizza'
+      })
+        .then((response) => commit('setPizzas', response))
+        .catch(console.error);
+    },
+
+    addToCart () {
+
     }
   }
 });
