@@ -8,12 +8,6 @@ const client = createClient({
 });
 // Content preview access: 2685c076cbca360be599127f3998c943977bccfc7460f49e5754400d31202803
 
-client.getEntries({
-  'content_type': 'page'
-})
-.then((response) => console.log(response.items))
-.catch(console.error);
-
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -29,6 +23,10 @@ export default new Vuex.Store({
 
     setPizzas(s, data) {
       s.pizzas = data;
+    },
+
+    setInCart(s, data) {
+      s.cart.push(data);
     }
   },
   actions: {
@@ -47,8 +45,8 @@ export default new Vuex.Store({
         .catch(console.error);
     },
 
-    addToCart () {
-
+    addToCart ({ commit }, pizza) {
+      commit('setInCart', pizza);
     }
   }
 });
