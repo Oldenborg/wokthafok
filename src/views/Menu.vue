@@ -2,11 +2,9 @@
   <div v-if="!loading" class="home-page">
     <h2>{{ page.fields.title }}</h2>
     <p>{{ page.fields.content }}</p>
-    <ul v-if="this.hasPizzas">
-      <li v-for="pizza in pizzas" :key="pizza.sys.id">
-        <menu-item :item="pizza.fields"></menu-item>
-      </li>
-    </ul>
+    <div class="card-deck" v-if="this.hasPizzas">
+      <menu-item v-for="pizza in pizzas" :key="pizza.sys.id" :item="pizza.fields"></menu-item>
+    </div>
   </div>
 </template>
 
